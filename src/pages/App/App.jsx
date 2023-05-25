@@ -5,7 +5,6 @@ import AuthPage from '../AuthPage/AuthPage';
 import ProfilePage from '../ProfilePage/ProfilePage';
 import NavBar from '../../components/NavBar/NavBar';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import Header from '../../components/Header/Header';
 import AnimeDetailPage from '../AnimeDetailPage/AnimeDetailPage';
 import MainContent from '../../components/MainContent/MainContent';
 import './App.css';
@@ -33,7 +32,7 @@ export default function App() {
 	}
 
 	const FetchAnime = async (query) => {
-		const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=bypopularity&sort=asc&limit=10?sfw`)
+		const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=bypopularity&sort=asc&limit=30?sfw`)
 			.then(res => res.json());
 
     console.log('Hello', temp.data)
@@ -50,7 +49,6 @@ export default function App() {
       { user ?
           <>
             <NavBar user={user} setUser={setUser} />
-            <Sidebar topAnime={topAnime} />
             <Routes>
               {/* Route components in here */}
               {/* <Route path="/" element={<AnimeListPage />} */}
@@ -58,7 +56,8 @@ export default function App() {
                   HandleSearch={HandleSearch}
                   search={search}
                   SetSearch={SetSearch}
-                  animeList={animeList} />} />
+                  animeList={animeList}
+                  topAnime={topAnime} />} />
               <Route path="/anime/:id" element={<AnimeDetailPage />} />
               <Route path="/profile/" element={<ProfilePage />} />
               

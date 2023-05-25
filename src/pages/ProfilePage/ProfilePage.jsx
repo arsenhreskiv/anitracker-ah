@@ -9,6 +9,7 @@ export default function ProfilePage() {
   return (
     <>
       <h1>Profile Page</h1>
+      
       <button onClick={handleCheckToken}>Check When My Login Expires</button>
     </>
   );

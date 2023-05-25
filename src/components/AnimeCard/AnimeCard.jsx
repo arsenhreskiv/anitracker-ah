@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import '../../index.css'
 
 
-export default function AnimeCard({ anime }) {
+export default function AnimeCard({ anime, addToWatchlist }) {
 
 	return (
 		<>

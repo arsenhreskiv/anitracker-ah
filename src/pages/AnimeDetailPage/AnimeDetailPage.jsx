@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import * as animeAPI from '../../utilities/anime-api'
+import Comment from '../../components/Comment/Comment'
+import './AnimeDetailPage.css'
 
 
-export default function AnimeDetailPage() {
+export default function AnimeDetailPage({ addToWatchlist }) {
     const {id} = useParams()
     console.log(`${id}`)
     //state
     const [anime, setAnime] = useState({})
     const [characters, setCharacters] = useState([])
     const [showMore, setShowMore] = useState(false)
+    const [comments, setComments] = useState([]);
+    const [commentContent, setCommentContent] = useState('');
 
     useEffect(() => {
         console.log('useEffect Running')
@@ -17,14 +21,24 @@ export default function AnimeDetailPage() {
 
             console.log('Naruto')
             const details =  await fetch(`https://api.jikan.moe/v4/anime/${id}`)
-            // .then(res => res.json())
             const data = await details.json()
             setAnime(data.data)
-            // .then(details => setAnime(details))
         }
     animeDetail()
     }, [id])
-    
+
+    useEffect(() => {
+        // Load comments from local storage on component mount
+        const storedComments = localStorage.getItem('comments');
+        if (storedComments) {
+          setComments(JSON.parse(storedComments));
+        }
+      }, []);
+
+    useEffect(() => {
+        localStorage.setItem('comments', JSON.stringify(comments));
+    }, [comments]);
+    console.log(anime)
     //destructure anime
     const {
         title, synopsis, 
@@ -34,19 +48,29 @@ export default function AnimeDetailPage() {
         status, rating, source } = anime
     
 
-    // const getAnime = async (id) => {
-    //     const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`)
-    //     const data = await response.json()
-    //     setAnime(data.data)
-    // }
-
-    // //get characters
-    // const getCharacters = async (anime) => {
-    //     const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}/characters`)
-    //     const data = await response.json()
-    //     setCharacters(data.data)
-    //     console.log(data.data)
-    // }
+    const handleAddToWatchlist = () => {
+        const animeToAdd = {
+            id: anime.mal_id,
+            title: anime.title,
+            };
+        
+            addToWatchlist(animeToAdd);
+          };
+    
+    const addComment = (content) => {
+        const newComment = { id: Date.now(), content };
+        setComments((prevComments) => [...prevComments, newComment]);
+        setCommentContent('');
+    };
+        
+    const handleCommentChange = (e) => {
+        setCommentContent(e.target.value);
+    };
+        
+    const handleCommentSubmit = (e) => {
+        e.preventDefault();
+        addComment(commentContent);
+    };
         
     return (
         <>
@@ -71,12 +95,13 @@ export default function AnimeDetailPage() {
                     </div>
                 </div>
             </div>
-                {/* <p className="description">
+                <p className="description">
                     {showMore ? synopsis : synopsis?.substring(0, 450) + '...'}
-                    <button onClick={() => {
-                        setShowMore(!showMore)
-                    }}>{showMore ? 'Show Less': 'Read More'}</button>
+                    
                 </p>
+                    <button className="read-more-button" onClick={() => setShowMore(!showMore)}>
+                        {showMore ? 'Show Less' : 'Read More'}
+                    </button>
            
             <h3 className="title">Trailer</h3>
             <div className="trailer-con">
@@ -91,7 +116,32 @@ export default function AnimeDetailPage() {
                     </iframe> :
                     <h3>Trailer not available</h3>
                 }
-            </div> */}
+            </div>
+            <div>
+                <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
+            </div>   
+            <div className="comment-section">
+                <h3>Comments</h3>
+                {comments.length === 0 ? (
+                <p>No comments yet.</p>
+                ) : (
+                comments.map((comment) => (
+                    <Comment key={comment.id} content={comment.content} />
+                ))
+                )}
+            </div>
+            <form className="comment-form" onSubmit={handleCommentSubmit}>
+            <input
+                type="text"
+                placeholder="Add a comment..."
+                value={commentContent}
+                onChange={handleCommentChange}
+                className="comment-input"
+                />
+            <button type="submit" className="comment-submit-button">
+                Submit
+            </button>
+            </form>
             {/* <h3 className="title">Characters</h3>
             <div className="characters">
                 {characters?.map((character, index) => {
