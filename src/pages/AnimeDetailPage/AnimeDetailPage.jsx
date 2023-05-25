@@ -5,20 +5,26 @@ import * as animeAPI from '../../utilities/anime-api'
 
 export default function AnimeDetailPage() {
     const {id} = useParams()
-
+    console.log(`${id}`)
     //state
     const [anime, setAnime] = useState({})
     const [characters, setCharacters] = useState([])
     const [showMore, setShowMore] = useState(false)
 
     useEffect(() => {
+        console.log('useEffect Running')
         async function animeDetail() {
-            const details =  await animeAPI.getAnimeId(id)
-            console.log(details)
-            setAnime(details)
-    }
+
+            console.log('Naruto')
+            const details =  await fetch(`https://api.jikan.moe/v4/anime/${id}`)
+            // .then(res => res.json())
+            const data = await details.json()
+            setAnime(data.data)
+            // .then(details => setAnime(details))
+        }
     animeDetail()
-    }, [])
+    }, [id])
+    
     //destructure anime
     const {
         title, synopsis, 
@@ -26,28 +32,25 @@ export default function AnimeDetailPage() {
         season, images, rank, 
         score,scored_by, popularity, 
         status, rating, source } = anime
+    
 
-    //get anime based on id
-    const getAnime = async (id) => {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`)
-        const data = await response.json()
-        setAnime(data.data)
-    }
+    // const getAnime = async (id) => {
+    //     const response = await fetch(`https://api.jikan.moe/v4/anime/${id}`)
+    //     const data = await response.json()
+    //     setAnime(data.data)
+    // }
 
-    //get characters
-    const getCharacters = async (anime) => {
-        const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}/characters`)
-        const data = await response.json()
-        setCharacters(data.data)
-        console.log(data.data)
-    }
-
-
-    //initial render
-
-
+    // //get characters
+    // const getCharacters = async (anime) => {
+    //     const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}/characters`)
+    //     const data = await response.json()
+    //     setCharacters(data.data)
+    //     console.log(data.data)
+    // }
+        
     return (
         <>
+        
             <h1>{title}</h1>
             <div className="details">
                 <div className="detail">
@@ -67,13 +70,14 @@ export default function AnimeDetailPage() {
                         <p><span>Duration:</span><span>{duration}</span></p>
                     </div>
                 </div>
-                <p className="description">
+            </div>
+                {/* <p className="description">
                     {showMore ? synopsis : synopsis?.substring(0, 450) + '...'}
                     <button onClick={() => {
                         setShowMore(!showMore)
                     }}>{showMore ? 'Show Less': 'Read More'}</button>
                 </p>
-            </div>
+           
             <h3 className="title">Trailer</h3>
             <div className="trailer-con">
                 {trailer?.embed_url ? 
@@ -87,8 +91,8 @@ export default function AnimeDetailPage() {
                     </iframe> :
                     <h3>Trailer not available</h3>
                 }
-            </div>
-            <h3 className="title">Characters</h3>
+            </div> */}
+            {/* <h3 className="title">Characters</h3>
             <div className="characters">
                 {characters?.map((character, index) => {
                     const {role} = character
@@ -101,7 +105,7 @@ export default function AnimeDetailPage() {
                         </div>
                     </Link>
                 })}
-            </div>
-        </ >
+            </div> */}
+        </>
     )
 }

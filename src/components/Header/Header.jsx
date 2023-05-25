@@ -4,7 +4,7 @@
 export default function Header() {
     return (
 		<header>
-			<h1>The<strong>Anime</strong>Database</h1>
+			<h1><strong>Ani</strong>Tracker</h1>
 		</header>
 	)
 }

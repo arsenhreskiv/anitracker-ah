@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import '../../index.css'
+
 
 export default function AnimeCard({ anime }) {
+
 	return (
 		<>
 			<Link 
-				to={anime.url} 
-				target="_blank" 
+				to={`/anime/${anime.mal_id}`} 
 				rel="noreferrer">
 				<figure>
 					<img 

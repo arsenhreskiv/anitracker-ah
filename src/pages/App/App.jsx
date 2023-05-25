@@ -33,7 +33,6 @@ export default function App() {
 	}
 
 	const FetchAnime = async (query) => {
-    const letter =  query[0]
 		const temp = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&order_by=bypopularity&sort=asc&limit=10?sfw`)
 			.then(res => res.json());
 

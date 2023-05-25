@@ -1,5 +1,7 @@
 import React from 'react'
 import AnimeCard from '../AnimeCard/AnimeCard';
+import Header from '../Header/Header';
+import './MainContent.css'
 
 export default function MainContent({
     HandleSearch,
@@ -14,6 +16,7 @@ export default function MainContent({
 	return (
 		<main>
 			<div className="main-head">
+                <Header />
 				<form 
 					className="search-box"
 					onSubmit={HandleSearch}>
