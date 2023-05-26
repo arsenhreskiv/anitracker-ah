@@ -50,8 +50,6 @@ export default function App() {
           <>
             <NavBar user={user} setUser={setUser} />
             <Routes>
-              {/* Route components in here */}
-              {/* <Route path="/" element={<AnimeListPage />} */}
               <Route path="/" element={<MainContent
                   HandleSearch={HandleSearch}
                   search={search}

@@ -8,7 +8,6 @@ export default function Sidebar({ topAnime }) {
     const top = topAnime.map(anime => (
 					<Link 
 						to={`/anime/${anime.mal_id}`} 
-						// target="_blank"
 						key={anime.mal_id} 
 						rel="noreferrer">
 						{ anime.title_english }

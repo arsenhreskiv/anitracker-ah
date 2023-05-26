@@ -142,20 +142,6 @@ export default function AnimeDetailPage({ addToWatchlist }) {
                 Submit
             </button>
             </form>
-            {/* <h3 className="title">Characters</h3>
-            <div className="characters">
-                {characters?.map((character, index) => {
-                    const {role} = character
-                    const {images, name, mal_id} = character.character
-                    return <Link to={`/character/${mal_id}`} key={index}>
-                        <div className="character">
-                            <img src={images?.jpg.image_url} alt="" />
-                            <h4>{name}</h4>
-                            <p>{role}</p>
-                        </div>
-                    </Link>
-                })}
-            </div> */}
         </>
     )
 }

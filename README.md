@@ -11,7 +11,7 @@ AniTracker is a App that allows the user to look through an anime database and s
 
 ### Searching for Anime
 
-![searching](/images/searching.png)
+![searching](/images/search.png)
 
 ### Anime Details page
 

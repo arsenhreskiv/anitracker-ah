@@ -1,0 +1,34 @@
+.anime-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .anime-card:hover {
+    transform: translateY(-4px);
+  }
+  
+  .anime-card a {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .anime-card figure {
+    margin-bottom: 12px;
+  }
+  
+  .anime-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .anime-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
